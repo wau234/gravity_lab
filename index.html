@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gravity Lab | N-body simulator</title>
+  <style>
+    html, body { margin: 0; padding: 0; background: #050912; overflow: hidden; }
+    canvas { display: block; }
+    #ui {
+      pointer-events: auto;
+      position: fixed; left: 22px; top: 22px; width: 255px; box-sizing: border-box;
+      padding: 15px 18px 16px; background: rgba(8,14,25,.93);
+      border: 1px solid rgba(255,255,255,.08); border-radius: 8px;
+      color:#e6edf7; font:11px Arial,sans-serif; z-index:10; user-select:none;
+      backdrop-filter: blur(4px);
+    }
+    #ui h1 { margin:0 0 4px; font-size:17px; font-weight:600; }
+    #ui .subtitle { color:#91a2b7; font-size:10px; margin-bottom:13px; }
+    #ui .stats { display:flex; justify-content:space-between; margin:6px 0 10px; }
+    #ui label.row { display:block; margin:10px 0 3px; }
+    #ui .label-line { display:flex; justify-content:space-between; }
+    #ui input[type=range] { width:100%; margin:3px 0 0; accent-color:#62d8ff; }
+    #ui .check { display:flex; align-items:center; gap:7px; margin:5px 0 9px; }
+    #ui hr { border:0; border-top:1px solid rgba(255,255,255,.09); margin:14px 0 8px; }
+    #ui .help { color:#91a2b7; line-height:1.55; font-size:10px; }
+    #status { position:fixed; right:24px; bottom:18px; color:rgba(145,162,183,.9);
+      font:10px Arial,sans-serif; z-index:10; pointer-events:none; }
+    @media (max-height:650px) {
+      #ui { top:10px; left:10px; transform:scale(.88); transform-origin:top left; }
+    }
+      #ui input, #ui label { pointer-events: auto; }
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+</head>
+<body>
+  <div id="ui">
+    <h1>GRAVITY LAB</h1>
+    <div class="subtitle" id="modeText">N-BODY SIMULATION / LIVE</div>
+    <div class="check"><input id="pairGravity" type="checkbox"><label for="pairGravity">PARTICLE-PAIR GRAVITY</label></div>
+    <div class="stats"><span id="bodyCount">Bodies 0</span><span id="gravityText">Gravity 0.16</span><span id="timeText">Time 1.0x</span></div>
+    <label class="row"><div class="label-line"><span>PLANET MASS</span><span id="planetMassValue"></span></div><input id="planetMass" type="range" min="100" max="5000" step="1" value="5000"></label>
+    <label class="row"><div class="label-line"><span>PARTICLE SIZE</span><span id="particleSizeValue"></span></div><input id="particleSize" type="range" min="1" max="9" step="0.1" value="1"></label>
+    <label class="row"><div class="label-line"><span>GRID SPACING</span><span id="gridSpacingValue"></span></div><input id="gridSpacing" type="range" min="2" max="30" step="0.1" value="8"></label>
+    <label class="row"><div class="label-line"><span>GRID PARTICLES</span><span id="gridCountValue"></span></div><input id="gridCount" type="range" min="1" max="50" step="1" value="10"></label>
+    <label class="row"><div class="label-line"><span>PARTICLE MASS</span><span id="particleMassValue"></span></div><input id="particleMass" type="range" min="0" max="1" step="0.001" value="0"></label>
+    <label class="row"><div class="label-line"><span>PARTICLE SPEED</span><span id="particleSpeedValue"></span></div><input id="particleSpeed" type="range" min="0" max="10" step="0.1" value="2"></label>
+    <label class="row"><div class="label-line"><span>RESTITUTION</span><span id="restitutionValue"></span></div><input id="restitution" type="range" min="0" max="1" step="0.01" value="1"></label>
+    <hr><div class="help">SPACE PAUSE · RIGHT DRAG ORBIT<br>R RESET · +/- GRAVITY · [ ] TIME<br>H HELP · X CLEAR</div>
+  </div>
+  <div id="status">PAIRWISE NEWTONIAN GRAVITY · SOFTENED</div>
+  <script src="sketch.js"></script>
+</body>
+</html>
